@@ -121,7 +121,7 @@ struct ChatMessage: Codable, Identifiable {
                     if taskError != nil { self.stopListening() }
                 }
             }
-        } catch { error = error.localizedDescription; stopListening() }
+        } catch {self error = error.localizedDescription; stopListening() }
     }
     func stopListening() {
         if audioEngine.isRunning { audioEngine.stop() }
