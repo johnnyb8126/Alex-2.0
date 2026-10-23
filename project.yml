@@ -9,11 +9,11 @@ targets:
   Alex2:
     type: application
     platform: iOS
-    sources: [Alex2]
+    sources: [Alex2App]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.ohmloom.alex2
-        INFOPLIST_FILE: Alex2/Info.plist
+        INFOPLIST_FILE: Alex2App/Info.plist
         TARGETED_DEVICE_FAMILY: '1'
         CODE_SIGN_STYLE: Automatic
         GENERATE_INFOPLIST_FILE: NO
