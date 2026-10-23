@@ -1,0 +1,19 @@
+name: Alex2
+options:
+  bundleIdPrefix: io.ohmloom
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    IPHONEOS_DEPLOYMENT_TARGET: '17.0'
+targets:
+  Alex2:
+    type: application
+    platform: iOS
+    sources: [Alex2]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.ohmloom.alex2
+        INFOPLIST_FILE: Alex2/Info.plist
+        TARGETED_DEVICE_FAMILY: '1'
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: NO

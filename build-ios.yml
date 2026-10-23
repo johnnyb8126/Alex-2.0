@@ -1,0 +1,28 @@
+name: Build Alex 2.0 iOS IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Compile for iPhone (unsigned)
+        run: |
+          xcodebuild -project Alex2.xcodeproj -scheme Alex2 -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath "$RUNNER_TEMP/DerivedData" CODE_SIGNING_ALLOWED=NO build
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p "$RUNNER_TEMP/ipa/Payload"
+          cp -R "$RUNNER_TEMP/DerivedData/Build/Products/Release-iphoneos/Alex2.app" "$RUNNER_TEMP/ipa/Payload/"
+          cd "$RUNNER_TEMP/ipa"
+          zip -qry "$GITHUB_WORKSPACE/Alex2-unsigned.ipa" Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Alex2-unsigned-ipa
+          path: Alex2-unsigned.ipa
+          if-no-files-found: error
