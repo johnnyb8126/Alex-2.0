@@ -63,6 +63,7 @@ struct ChatMessage: Codable, Identifiable {
         Task { @MainActor in self.speaking = false }
     }
     func send(_ value: String? = nil) async {
+        if listening { stopListening() }
         let content = (value ?? draft).trimmingCharacters(in: .whitespacesAndNewlines)
         guard !content.isEmpty, !busy else { return }
         draft = ""; error = nil; busy = true
@@ -91,6 +92,7 @@ struct ChatMessage: Codable, Identifiable {
     }
     func startListening() async {
         guard !listening else { stopListening(); return }
+        guard recognizer?.isAvailable == true else { error = "Speech recognition is unavailable right now."; return }
         error = nil
         let authorization = await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { continuation.resume(returning: $0) }
@@ -121,7 +123,7 @@ struct ChatMessage: Codable, Identifiable {
                     if taskError != nil { self.stopListening() }
                 }
             }
-        } catch {self error = error.localizedDescription; stopListening() }
+        } catch { self.error = error.localizedDescription; stopListening() }
     }
     func stopListening() {
         if audioEngine.isRunning { audioEngine.stop() }
