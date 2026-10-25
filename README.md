@@ -30,7 +30,7 @@
 Node.js 20+ required; no npm dependencies.
 
 ```bash
-cd backend
+cd Server
 export OPENAI_API_KEY='your-api-key'
 export ALEX_APP_TOKEN='long-random-token'
 node server.mjs
@@ -58,3 +58,7 @@ For a fully production-ready Alex: streaming audio, true viseme-based lip sync, 
 The repository includes `.github/workflows/build-ios.yml`. Upload the **contents of this project folder** to the repository root (including the hidden `.github` folder), not the parent directory or a ZIP. Go to GitHub > Actions > Build Alex 2.0 iOS IPA > Run workflow. After the job succeeds, download `Alex2-unsigned-ipa` from the run's Artifacts section and unzip that artifact to obtain `Alex2-unsigned.ipa`.
 
 This IPA is **unsigned** and must be signed by a compatible tool before installation. A successful cloud build does not guarantee LiveContainer compatibility. The workflow has not yet been run on GitHub; build errors, if any, will be visible in the Actions log.
+
+## Repair notes
+Fixed Swift syntax error in speech handler; added speech availability check; updated investor architecture and budget. iOS build and LiveContainer are not yet verified.
+i
